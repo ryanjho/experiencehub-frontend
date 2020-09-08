@@ -1,6 +1,4 @@
 import apiUtil from '../utilities/api';
-import imageApiUtil from '../utils/imageApi';
-import { getAllByAltText } from '@testing-library/react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
 const buildUrl = apiPath => {
@@ -17,5 +15,6 @@ export default {
             console.log(err);
             return [];
         }
-    }
+    },
+
 }

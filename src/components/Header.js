@@ -1,20 +1,43 @@
 import React, { Component } from 'react';
-import { Button, Navbar, Nav, Form, FormControl } from 'react-bootstrap';
-import { Route, Link, Redirect } from 'react-router-dom';
+import { Navbar, Nav, Dropdown } from 'react-bootstrap';
+import { Route, Link, Redirect, NavLink } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 
 export class Header extends Component {
     render() {
         return (
             <Navbar bg="dark" variant="dark" expand="lg">
-                <Navbar.Brand href="#home">Experience Hub</Navbar.Brand>
+                <LinkContainer to="/"
+                    ><Navbar.Brand href="/">Experience Hub</Navbar.Brand>
+                </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
+                        <LinkContainer to="/">
+                            <Nav.Link>Home</Nav.Link>
+                        </LinkContainer>
+                        <LinkContainer to="/about">
+                            <Nav.Link>About</Nav.Link>
+                        </LinkContainer>
                     </Nav>
-                    <Button variant="primary">User Login</Button>
-                    <Button variant="primary">Merchant Login</Button>
+                    <Dropdown className="user-button-nav">
+                        <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                            User
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <LinkContainer to="/users/login"><Dropdown.Item>Login</Dropdown.Item></LinkContainer>
+                            <LinkContainer to="/users/signup"><Dropdown.Item>Sign Up</Dropdown.Item></LinkContainer>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <Dropdown className="user-button-nav">
+                        <Dropdown.Toggle variant="warning" id="dropdown-basic">
+                            Merchant
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <LinkContainer to="/merchants/login"><Dropdown.Item>Login</Dropdown.Item></LinkContainer>
+                            <LinkContainer to="/merchants/signup"><Dropdown.Item>Sign Up</Dropdown.Item></LinkContainer>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </Navbar.Collapse>
             </Navbar>
         )
