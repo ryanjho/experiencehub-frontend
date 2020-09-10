@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Button, Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Button, Card } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 export class Experiences extends Component {

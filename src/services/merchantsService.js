@@ -1,5 +1,4 @@
 // Dependencies
-import apiUtil from '../utilities/api';
 const axios = require('axios');
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
 
@@ -9,31 +8,35 @@ const buildUrl = apiPath => {
 }
 
 export default {
-    // async getAll() {
-    //     try {
-    //         const response = await apiUtil.get(buildUrl('/experiences'));
-    //         return response.data;
-    //     } catch(err) {
-    //         console.log(err);
-    //         return [];
-    //     }
-    // },
     async getAll() {
         try {
-            const response = await axios.get(buildUrl('/experiences'), { withCredentials: true });
+            const response = await axios.get(buildUrl('/merchants'), { withCredentials: true });
             console.log(response);
             return response.data.data;
         } catch(err) {
             console.log(err);
+            return [];
         }
     },
 
     async getOneById(id) {
         try {
-            const response = await axios.get(buildUrl(`/experiences/${id}`), { withCredentials: true});
+            const response = await axios.get(buildUrl(`/merchants/${id}`), { withCredentials: true});
             return response.data.data;
         } catch(err) {
             console.log(err);
+            return []
         }
+    },
+
+    async create(newMerchant) {
+        try {
+            const response = await axios.post(buildUrl('/merchants'), newMerchant);
+            return response.data.data;
+        } catch(err) {
+            console.log(err);
+            return [];
+        }
+
     }
 }
