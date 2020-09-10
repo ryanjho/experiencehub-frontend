@@ -21,7 +21,6 @@ export default {
     async getAll() {
         try {
             const response = await axios.get(buildUrl('/experiences'), { withCredentials: true });
-            console.log(response);
             return response.data.data;
         } catch(err) {
             console.log(err);

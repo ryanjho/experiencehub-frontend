@@ -8,34 +8,30 @@ const buildUrl = apiPath => {
 }
 
 export default {
-    async getAll() {
+    async merchantLogin(user) {
         try {
-            const response = await axios.get(buildUrl('/merchants'), { withCredentials: true });
-            console.log(response);
+            const response = await axios.post(buildUrl('/merchants/login'), user, {withCredentials: true});
             return response.data.data;
         } catch(err) {
             console.log(err);
-            return [];
         }
     },
 
-    async getOneById(id) {
+    async merchantLogout() {
         try {
-            const response = await axios.get(buildUrl(`/merchants/${id}`), { withCredentials: true});
+            const response = await axios.get(buildUrl('/merchants/logout'), { withCredentials: true});
             return response.data.data;
         } catch(err) {
             console.log(err);
-            return []
         }
     },
 
-    async create(newMerchant) {
+    async checkMerchantAuthentication() {
         try {
-            const response = await axios.post(buildUrl('/merchants'), newMerchant);
-            return response.data.data;
+            const response = await axios.get(buildUrl('/merchants/authentication'), { withCredentials: true});
+            return response.data.data
         } catch(err) {
             console.log(err);
-            return [];
         }
-    },
+    }
 }

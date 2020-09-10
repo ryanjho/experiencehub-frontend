@@ -5,7 +5,7 @@ import imagesService from '../services/imagesService';
 import merchantsService from '../services/merchantsService';
 import { Redirect } from 'react-router-dom';
 
-export class MerchantSignUp extends Component {
+class MerchantSignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,6 +33,7 @@ export class MerchantSignUp extends Component {
     
     handleSubmit = async event => {
         event.preventDefault();
+        
 
         // Get Image URL from Cloudinary
         const imageUrl = await this.uploadImage(this.state.imageFile);
@@ -53,17 +54,14 @@ export class MerchantSignUp extends Component {
             })
         } else {
             this.setState({
-                signUp: true
+                signUp: true,
+                name: '',
+                email: '',
+                password: '',
+                description: '',
+                imageFile: null
             })
         }
-        
-        this.setState({
-            name: '',
-            email: '',
-            password: '',
-            description: '',
-            imageFile: null
-        })
 
     }
 
@@ -82,7 +80,7 @@ export class MerchantSignUp extends Component {
 
     render() {
         return (
-            <div className="container">           
+            <div className="container">          
                 { this.state.signUp ? <Redirect to="/" /> : ''}
                 <h1>Merchant Sign Up</h1>
                 <Form onSubmit={this.handleSubmit}>

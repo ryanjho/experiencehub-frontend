@@ -9,9 +9,9 @@ export class Experiences extends Component {
                 <h2>Experiences</h2>
                 <div className="container experiences">
                 {this.props.experiences ?
-                    this.props.experiences.map(experience => {
+                    this.props.experiences.map( (experience, index) => {
                         return (
-                            <Card style={{ width: '18rem'}}>
+                            <Card style={{ width: '18rem'}} key={index}>
                                 <Card.Img variant="top" src={ experience.image} />
                                 <Card.Body>
                                     <Card.Title>{ experience.name }</Card.Title>
