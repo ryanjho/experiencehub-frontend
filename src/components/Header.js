@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, Dropdown } from 'react-bootstrap';
-import { Route, Link, Redirect, NavLink } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 
 export class Header extends Component {

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
 import Home from './components/Home';
 import About from './components/About';
-import UserLogin from './components/UserLogin';
 import Experience from './components/Experience';
-
+import UserSignUp from './components/UserSignUp';
+import UserLogin from './components/UserLogin';
+import MerchantSignUp from './components/MerchantSignUp';
+import MerchantLogin from './components/MerchantLogin';
 
 class App extends Component {
   render() {
@@ -25,8 +26,14 @@ class App extends Component {
               <Experience 
                 experienceId={props.match.params.id}
               />
-            } 
+              } 
             />
+
+            <Route path="/users/login" component={UserLogin} />
+            <Route path="/users/signup" component={UserSignUp} />
+            <Route path="/merchants/login" component={MerchantLogin} />
+            <Route path="/merchants/signup" component={MerchantSignUp} />
+
           </Switch>
         </div>
       </Router>
