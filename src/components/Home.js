@@ -3,6 +3,7 @@ import { Button, Jumbotron } from 'react-bootstrap';
 import experienceService from '../services/experienceService';
 import Experiences from './Experiences';
 import { LinkContainer } from 'react-router-bootstrap';
+import merchantsService from '../services/merchantsService';
 
 export class Home extends Component {
     constructor(props) {

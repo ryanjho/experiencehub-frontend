@@ -23,3 +23,8 @@
 .about-us-image {
   width: 100%;
 }
+
+.user-button-nav, .merchant-button-nav {
+  margin-right: 5px;
+}
+
