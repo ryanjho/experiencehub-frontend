@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
-import merchantsService from '../services/merchantsService';
 import sessionsService from '../services/sessionsService';
 
 class MerchantLogin extends Component {
@@ -33,7 +32,7 @@ class MerchantLogin extends Component {
             this.setState({error: response.error})
         } else {
             localStorage.setItem('merchant', JSON.stringify(response))
-            this.props.merchantLogin();
+            await this.props.merchantLogin(response);
         }
     }
 
@@ -54,6 +53,7 @@ class MerchantLogin extends Component {
                     </Form.Group>
                     <Button variant="primary" type="submit">Submit</Button>
                 </Form>
+                { this.props.merchantLoginStatus ? <Redirect to="/merchants/dashboard" /> : ''}
             </div>
         )
     }

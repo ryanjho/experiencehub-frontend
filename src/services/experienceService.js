@@ -1,5 +1,4 @@
 // Dependencies
-import apiUtil from '../utilities/api';
 const axios = require('axios');
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
 
@@ -27,6 +26,15 @@ export default {
         }
     },
 
+    async getAllByMerchant(id) {
+        try {
+            const response = await axios.get(buildUrl(`/merchants/${id}/experiences`), { withCredentials: true});
+            return response.data.data;
+        } catch(err) {
+            console.log(err);
+        }
+    },
+
     async getOneById(id) {
         try {
             const response = await axios.get(buildUrl(`/experiences/${id}`), { withCredentials: true});
@@ -34,5 +42,23 @@ export default {
         } catch(err) {
             console.log(err);
         }
+    },
+
+    async create(newExperience) {
+        try {
+            const response = await axios.post(buildUrl('/experiences'), newExperience);
+            return response.data.data;
+        } catch(err) {
+            console.log(err);
+        }
+    },
+    async delete(experienceId) {
+        try {
+            const response = await axios.delete(buildUrl(`/experiences/${experienceId}`));
+        } catch(err) {
+            console.log(err);
+        }
     }
+
+
 }
