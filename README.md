@@ -1,5 +1,4 @@
-# Experience Hub - Front End
-Experience Hub - Front End
+# Experience Hub - Explore Unique Experiences
 
 ## Project Demo
 Project Demo Link: https://experiencehub.herokuapp.com/
