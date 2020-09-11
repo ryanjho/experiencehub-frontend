@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
 import './App.css';
 import Header from './components/Header';
 import Home from './components/Home';
@@ -11,6 +12,8 @@ import UserLogin from './components/UserLogin';
 import MerchantSignUp from './components/MerchantSignUp';
 import MerchantLogin from './components/MerchantLogin';
 import sessionsService from './services/sessionsService';
+import MerchantDashboard from './components/MerchantDashboard';
+import NewExperienceForm from './components/NewExperienceForm';
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +21,9 @@ class App extends Component {
     this.state = {
       userLoggedIn: false,
       merchantLoginStatus: false,
+      merchant: null,
+      user: null,
+      test: 'TESTING',
     }
   }
 
@@ -25,21 +31,32 @@ class App extends Component {
     await sessionsService.merchantLogout();
     this.setState({merchantLoginStatus: false});
     localStorage.clear();
-    console.log('hello');
   }
 
-  merchantLogin = () => {
-    this.setState({merchantLoginStatus: true});
+  merchantLogin = async (merchant) => {
+    this.setState({
+      merchantLoginStatus: true,
+      merchant: merchant
+    });
   }
 
-  async checkMerchantAuthentication() {
+  checkMerchantAuthentication = async () => {
     const response = await sessionsService.checkMerchantAuthentication();
-    if (response.merchantLoginStatus) this.setState({ merchantLoginStatus: true});
+    if (response.merchantLoginStatus) {
+      this.setState({
+        merchantLoginStatus: true,
+        merchant: JSON.parse(localStorage.getItem('merchant'))
+      })
+    } else {
+      this.setState( {
+        merchantLoginStatus: false
+      })
+    }
   }
   
 
-  componentDidMount() {
-    this.checkMerchantAuthentication();
+  async componentDidMount() {
+    await this.checkMerchantAuthentication();
   }
 
   render() {
@@ -55,9 +72,18 @@ class App extends Component {
             <Route path="/about" component={About} />
             <Route path="/users/login" component={UserLogin} />
 
+            <Route path="/experiences/new" render={(props) => 
+              <NewExperienceForm
+                merchantLoginStatus={this.state.merchantLoginStatus}
+                merchant={this.state.merchant}
+              />
+            } />
+
             <Route path="/experiences/:id" exact render={(props) =>
               <Experience 
                 experienceId={props.match.params.id}
+                merchantLoginStatus={this.state.merchantLoginStatus}
+                merchant={this.state.merchant}
               />
               } 
             />
@@ -71,7 +97,20 @@ class App extends Component {
               />
             } />
             <Route path="/merchants/signup" component={MerchantSignUp} />
-            <Route path="/" component={Home} />
+            
+            <Route path="/merchants/dashboard" render={props => 
+                <MerchantDashboard 
+                  merchantLoginStatus={this.state.merchantLoginStatus} 
+                  merchant={this.state.merchant}
+                />
+            } />
+              
+
+            <Route path="/" render={(props) => 
+              <Home 
+                merchantLoginStatus={this.state.merchantLoginStatus} 
+              />
+            }/>
 
           </Switch>
         </div>

@@ -3,7 +3,6 @@ import { Button, Jumbotron } from 'react-bootstrap';
 import experienceService from '../services/experienceService';
 import Experiences from './Experiences';
 import { LinkContainer } from 'react-router-bootstrap';
-import merchantsService from '../services/merchantsService';
 
 export class Home extends Component {
     constructor(props) {
@@ -40,7 +39,11 @@ export class Home extends Component {
                         </LinkContainer>
                     </p>
                 </Jumbotron>
-                <Experiences experiences={this.state.experiences}/>
+                <Experiences 
+                    experiences={this.state.experiences}
+                    merchantLoginStatus={this.props.merchantLoginStatus}
+                    title='Experiences'
+                />
                 
             </React.Fragment>
         )

@@ -46,7 +46,9 @@ export class Header extends Component {
                     
                     { this.props.merchantLoginStatus ? 
                         <React.Fragment>
-                            <Button variant="success">Create Experience</Button>
+                            <LinkContainer to="/merchants/dashboard">
+                                <Button variant="success">My Dashboard</Button>
+                            </LinkContainer>
                             <Button onClick={this.props.merchantLogout} className="merchant-logout" variant="danger">Log Out</Button> 
                         </React.Fragment>
                         : '' }

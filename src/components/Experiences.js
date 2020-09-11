@@ -4,9 +4,10 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 export class Experiences extends Component {
     render() {
+        console.log(this.props.experiences);
         return (
             <div className="container">
-                <h2>Experiences</h2>
+                <h2>{this.props.title}</h2>
                 <div className="container experiences">
                 {this.props.experiences ?
                     this.props.experiences.map( (experience, index) => {
@@ -25,7 +26,7 @@ export class Experiences extends Component {
                             </Card>
                         )
                     })
-                    : <p>Loading</p>}
+                    : ''}
                 </div>
             </div >
         )
