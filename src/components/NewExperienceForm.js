@@ -95,7 +95,7 @@ class NewExperienceForm extends Component {
                     </Form.Group>
                     <Form.Group controlId="description">
                         <Form.Label>Experience Description</Form.Label>
-                        <Form.Control as="textarea" rows="3" placeholder="Enter Company Description" required onChange={this.handleChange}/>
+                        <Form.Control as="textarea" rows="3" placeholder="Enter Experience Description" required onChange={this.handleChange}/>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Experience Image</Form.Label>
