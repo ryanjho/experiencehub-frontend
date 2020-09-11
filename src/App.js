@@ -14,6 +14,7 @@ import MerchantLogin from './components/MerchantLogin';
 import sessionsService from './services/sessionsService';
 import MerchantDashboard from './components/MerchantDashboard';
 import NewExperienceForm from './components/NewExperienceForm';
+import EditExperienceForm from './components/EditExperienceForm';
 
 class App extends Component {
   constructor(props) {
@@ -23,7 +24,6 @@ class App extends Component {
       merchantLoginStatus: false,
       merchant: null,
       user: null,
-      test: 'TESTING',
     }
   }
 
@@ -66,7 +66,6 @@ class App extends Component {
           <Header 
             merchantLoginStatus={this.state.merchantLoginStatus}
             merchantLogout={this.merchantLogout}
-            testButton={this.testButton}
           />
           <Switch>
             <Route path="/about" component={About} />
@@ -87,6 +86,11 @@ class App extends Component {
               />
               } 
             />
+
+            <Route path="/experiences/:id/edit" exact render={(props) => 
+              <EditExperienceForm 
+              experienceId={props.match.params.id}/>
+            } />
 
             <Route path="/users/login" component={UserLogin} />
             <Route path="/users/signup" component={UserSignUp} />

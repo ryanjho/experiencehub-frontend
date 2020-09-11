@@ -52,6 +52,16 @@ export default {
             console.log(err);
         }
     },
+
+    async update(experienceId, updatedExperience) {
+        try {
+            const response = await axios.put(buildUrl(`/experiences/${experienceId}`), updatedExperience);
+            return response.data.data;
+        } catch(err) {
+            console.log(err);
+        }
+    },
+
     async delete(experienceId) {
         try {
             const response = await axios.delete(buildUrl(`/experiences/${experienceId}`));
