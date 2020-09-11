@@ -13,15 +13,10 @@ class MerchantDashboard extends Component {
         }
     }
 
-    async fetchMerchantExperiences() {
+    fetchMerchantExperiences = async () => {
         try {
-            console.log(this.props.TEST);
             const experiences = await experienceService.getAllByMerchant(this.props.merchant._id);
-            console.log(experiences);
-            this.setState({
-                experiences: experiences
-            });
-            console.log(experiences);
+            this.setState({ experiences: experiences });
         } catch(err) {
             console.log(err);
         }

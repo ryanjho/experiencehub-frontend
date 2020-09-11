@@ -3,14 +3,23 @@ import experienceService from '../services/experienceService';
 import { Button, Spinner } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Redirect } from 'react-router-dom';
+import EditExperienceForm from './EditExperienceForm';
+import imagesService from '../services/imagesService';
 
-export class Experience extends Component {
+class Experience extends Component {
     constructor(props) {
         super(props);
         this.state = {
             experience: null,
             editable: false,
             deleted: false,
+            editForm: false,
+            name: '',
+            price: 0,
+            description: '',
+            address: '',
+            imageFile: null,
+            error: null
         }
     }
 
@@ -27,6 +36,65 @@ export class Experience extends Component {
         }
     }
 
+    handleEditFormChange = event => {
+        if (event.target.id === 'image') {
+            this.setState({
+                imageFile: event.target.files
+            })
+        } else {
+            this.setState( {
+                [event.target.id]: event.target.value
+            })
+        }
+    }
+
+
+    handleEditFormSubmit = async event => {
+        event.preventDefault();
+        
+        // Get Image URL from Cloudinary
+        const imageUrl = await this.uploadImage(this.state.imageFile);
+
+        const newExperience = await {
+            name: this.state.name,
+            price: this.state.price,
+            description: this.state.description,
+            address: this.state.address,
+            image: imageUrl,
+            merchantId: this.state.experience.merchantId
+        }
+
+        // Update Experience In Database
+        const response = await this.updateExperience(newExperience);
+
+        if (response.error) {
+            this.setState({
+                error: response.error
+            })
+        } else {
+            this.setState({
+                name: '',
+                price: 0,
+                address: '',
+                createNewExperience: true,
+                imageFile: null,
+                editForm: false,
+                experience: response
+            })
+        }
+
+
+    }
+
+    updateExperience = async (data) => {
+        return await experienceService.update(this.state.experience._id, data);
+    }
+
+    uploadImage = async files => {
+        const response = await imagesService.uploadImageCloudinary(files);
+        return response.secure_url;
+    }
+
     deleteExperience = async (event) => {
         try {
             event.preventDefault();
@@ -38,6 +106,18 @@ export class Experience extends Component {
         
     }
 
+    toggleEditForm = async event => {
+        event.preventDefault();
+        this.setState({
+            editForm: !this.state.editForm,
+            name: this.state.experience.name,
+            price: this.state.experience.price,
+            description: this.state.experience.description,
+            imageFile: null,
+            address: this.state.experience.address
+        });
+    }
+
     async componentDidMount() {
         await this.fetchExperience();
         const merchantLoginStatus = await this.props.merchantLoginStatus;
@@ -47,7 +127,22 @@ export class Experience extends Component {
     render() {
         return (
             <div className="container">
+                
                 { this.state.deleted ? <Redirect to="/merchants/dashboard" /> : ''}
+                
+                { 
+                    this.state.editForm ? 
+            
+                        <EditExperienceForm 
+                            experience={this.state.experience}
+                            handleEditFormChange = {this.handleEditFormChange}
+                            editingMerchant={this.state}
+                            handleEditFormSubmit = {this.handleEditFormSubmit}
+                        />
+                    
+                    : 
+                        ''
+                }
                 <React.Fragment>
                     {this.state.experience ?
                         <React.Fragment>
@@ -55,10 +150,9 @@ export class Experience extends Component {
                                 {
                                     this.state.editable ?
                                     <React.Fragment>
-                                        <LinkContainer to={`/experiences/${this.props.experienceId}/edit`}>
-                                            <Button variant="warning">Edit</Button>
-                                        </LinkContainer>
-                                        <Button variant="danger" onClick={this.deleteExperience}>Delete</Button>
+                                        
+                                        <Button variant="warning" className='merchant-button-nav' onClick={this.toggleEditForm}>Edit</Button>
+                                        <Button variant="danger" className='merchant-button-nav' onClick={this.deleteExperience}>Delete</Button>
                                     </React.Fragment>
 
                                     : ''

@@ -4,7 +4,6 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 export class Experiences extends Component {
     render() {
-        console.log(this.props.experiences);
         return (
             <div className="container">
                 <h2>{this.props.title}</h2>
